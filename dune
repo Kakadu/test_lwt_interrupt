@@ -1,0 +1,31 @@
+(env
+ (dev
+  (flags
+   (:standard -w -69))))
+
+(executable
+ (name asdf)
+ (modules ws asdf)
+ (libraries lwt lwt.unix websocket-lwt-unix)
+ (preprocess
+  (pps lwt_ppx)))
+
+(cram
+ (deps ./asdf.exe))
+
+(executable
+ (name client)
+ (modules client)
+ (modes js)
+ ;(libraries libphaser)
+ (preprocess
+  (pps ppx_inline_test js_of_ocaml-ppx)))
+
+(alias
+ (name default)
+ (deps
+  ./client.bc.js
+  ./index.html
+  ./asdf.exe
+  ;
+  ))
